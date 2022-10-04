@@ -95,7 +95,7 @@ serve
 - `mysql 5.7.36`
 - `php 7.2`
 
-因为服务器平台不靠谱，没发通知就迁移和回收资源，[吐槽一下反正没人看](https://hoverlod.github.io/2022/02/25/云主机过期了/)。所以后端改为本地运行。
+因为服务器平台不靠谱，没发通知就迁移和回收资源，所以后端改为本地运行。
 
 现本地WNMP配置：
 
@@ -184,21 +184,21 @@ taskkill /F /IM php-cgi.exe > nul
 
 描述：
 
-在window环境启动nginx时发生端口冲突，无法启动（后台看不到node进程，localhost不能正常访问）
+    在window环境启动nginx时发生端口冲突，无法启动（后台看不到node进程，localhost不能正常访问）
 
 解决：
 
-在`nginx/logs`查看日志，若报错：`bind() to 0.0.0.0:81 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)`，可确定是81端口冲突问题。
+    在`nginx/logs`查看日志，若报错：`bind() to 0.0.0.0:81 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)`，可确定是81端口冲突问题。
 
-方法1：给nginx找一个未占用的端口；
+    方法1：给nginx找一个未占用的端口；
 
-方法2：
+    方法2：
 
-`netstat -aon|findstr "81"` 查询谁占了81端口
+    `netstat -aon|findstr "81"` 查询谁占了81端口
 
-`tasklist|findstr "XXX"` 查看81端口 pid=XXX对应的任务
+    `tasklist|findstr "XXX"` 查看81端口 pid=XXX对应的任务
 
-然后kill那个任务再重启nginx。
+    然后kill那个任务再重启nginx。
 
 
 
@@ -206,13 +206,9 @@ taskkill /F /IM php-cgi.exe > nul
 
 描述：
 
-看图，如果均用nginx代理已经不该有跨域发生了，除了localhost和127.0.0.1会被当成两个东西。
-
-![image-20220315133324518](https://gitee.com/hoverload/fig-bed/raw/master/image-20220315133324518.png)
+    如果均用nginx代理已经不该有跨域发生了，除了localhost和127.0.0.1会被当成两个东西
 
 解决：
 
-项目里调用是用的这个：![image-20220315133536658](https://gitee.com/hoverload/fig-bed/raw/master/image-20220315133536658.png)
-
-所以普通浏览器访问也是127.0.0.1:81，不要访问localhost:81。
+    使用浏览器访问也是127.0.0.1:81，不要访问localhost:81。
 
